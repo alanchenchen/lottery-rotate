@@ -18,7 +18,7 @@ export default class LotteryRotate {
 		if(!canvas || !canvas.getContext)alert('您的浏览器不支持此转盘游戏！')
 		let lottery_list=document.createElement('ul');
 		this.obj.style.cssText = `position: relative;-webkit-transition: -webkit-transform ${this.rotateTime}s ease;transition: transform ${this.rotateTime}s ease;`;
-		lottery_list.style.cssText = 'position: absolute;left: 0;top: 0;right: 0;bottom:0;list-style: none;';
+		lottery_list.style.cssText = 'position: absolute;left: 0;top: 0;right: 0;bottom:0;list-style: none;text-align:center';
 		let html=document.documentElement || document.body;
 		let hW=html.getBoundingClientRect().width;
 		let cW = hW/7.5*this.rem;
