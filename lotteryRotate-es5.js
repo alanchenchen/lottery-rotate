@@ -36,9 +36,9 @@ LotteryRotate.prototype.init=function(){
 	    // 从(0, 0)坐标开始定义一条新的子路径
 	    ctx.moveTo(0, 0);
 	    // 旋转弧度,需将角度转换为弧度,使用 degrees * Math.PI/180 公式进行计算。
-	    ctx.rotate((360 / this.num * i + 360 / this.num ) * Math.PI/180);
+	   ctx.rotate((i*360/this.num-180/this.num-90)* Math.PI/180);
 	    // 绘制圆弧
-	    ctx.arc(0, 0,cW/2, 0,  2 * Math.PI / this.num, false);
+	   ctx.arc(0, 0,cW/2, 0,  2 * Math.PI / this.num, false);
 	    if (i % 2 == 0) {
 	        ctx.fillStyle = '#fff';
 	    }else{
@@ -55,7 +55,7 @@ LotteryRotate.prototype.init=function(){
 	    var li=document.createElement('li');
 	    li.innerHTML = this.listCont[i];
 	    li.style.cssText = 'position: absolute;top:0;left:0;width: 100%;padding-top:0.2rem;transform-origin: 50% 2.025rem;-webkit-transform-origin: 50% 2.025rem;font-size: .3rem;color:red;';
-		li.style.webkitTransform='rotate('+(-60*i)+'deg)';
+		li.style.webkitTransform='rotate('+(-(360/ this.num)*i)+'deg)';
 		lottery_list.appendChild(li);
 	}
 	this.obj.appendChild(canvas);
@@ -82,7 +82,7 @@ LotteryRotate.prototype.rotate=function(opt){
 				console.log('上一次索引是:'+$this.pos);
 				$this.pos+target>=$this.num?$this.pos=($this.pos+target-$this.num):$this.pos += target;
 				console.log('当前索引是:'+$this.pos);
-				degree += 60*target+360*$this.pre;
+				degree += 360/this.num*target+360*$this.pre;
 				$this.obj.style.transform='rotate('+degree+'deg)';
 				$this.obj.style.webkitTransform='rotate('+degree+'deg)';
 				$this.chance--;
