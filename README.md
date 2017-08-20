@@ -31,7 +31,7 @@ let Lottery=new LotteryRotate({
 });
 Lottery.rotate({
 	//请求后台的函数，必须return一个数字，数字和数组中的索引对应，a是奖品数组listCont
-	ajax:(list)=>list.indexOf('1元话费')},
+	ajax:(list)=>list.indexOf('1元话费'),
 	//抽奖成功的函数，num为中奖后的奖品名称，是字符串
 	callback:(award)=>alert(`恭喜你获得${award}`);
 });
