@@ -9,7 +9,7 @@ function LotteryRotate(opt){
 	this.rem = opt.rem;//canvas的大小，移动端布局，直接写数字，不用带单位
 	this.eType = opt.eType;//按钮的事件类型
 	this.isRotate=true;
-	this.pos = 0;//转盘初始的位置在数组里的索引
+	this.lastDegree = 0;//上次旋转后停留的角度
 	this.init();
 }
 	
@@ -75,20 +75,18 @@ LotteryRotate.prototype.rotate=function(opt){
 				if(ajax){
 					target = ajax($this.listCont);
 				}else{
-					var random = Math.ceil(Math.random()*$this.num);
+					var random = Math.ceil(Math.random()*($this.num-1));
 					target = random;
 				}
-				//计算并保留当前的索引位置
-				console.log('上一次索引是:'+$this.pos);
-				$this.pos+target>=$this.num?$this.pos=($this.pos+target-$this.num):$this.pos += target;
-				console.log('当前索引是:'+$this.pos);
-				degree += 360/this.num*target+360*$this.pre;
+				//每次旋转先将上次停留不足360度跑完，相当于从初始位置算本次旋转角度
+				degree += 360/$this.num*target+360*$this.pre+360-$this.lastDegree;
+				$this.lastDegree = 360/$this.num*target;//计算并保存上次旋转停留的角度
 				$this.obj.style.transform='rotate('+degree+'deg)';
 				$this.obj.style.webkitTransform='rotate('+degree+'deg)';
 				$this.chance--;
-				timer = setTimeout(()=>{
+				timer = setTimeout(function(){
 					$this.isRotate=true;
-					callback&&callback($this.listCont[$this.pos]);
+					callback&&callback($this.listCont[target]);
 				},$this.rotateTime*1000);
 			}else{
 				clearTimeout(timer);
