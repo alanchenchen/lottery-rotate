@@ -85,7 +85,7 @@ export default class LotteryRotate {
 					this.chance--;
 					timer = setTimeout(()=>{
 						this.isRotate=true;
-						callback&&callback(this.listCont[this.pos]);
+						callback&&callback(this.listCont[this.target]);
 					},this.rotateTime*1000);
 				}else{
 					clearTimeout(timer);
