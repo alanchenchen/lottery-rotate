@@ -1,3 +1,7 @@
+/*
+* Author : Alan Chen
+* E-mail : 739709491@qq.com
+*/
 export default class LotteryRotate {
 	constructor({obj,btn,rem,listCont,preRotate,chance,rotateTime,eType}) {
 		this.obj = obj;//大转盘外层盒子
