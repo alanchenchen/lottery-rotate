@@ -1,3 +1,7 @@
+/*
+* Author：Alan Chen
+* E-mail: 739709491@qq.com
+*/
 function LotteryRotate(opt){
 	this.obj = opt.obj;//大转盘外层盒子
 	this.btn = opt.btn;//转盘按钮
