@@ -1,5 +1,7 @@
 # lottery-rotate
 ## 适配移动端rem布局的canvas大转盘抽奖插件
+> Author：Alan Chen
+> E-mail: 739709491@qq.com
 ##  * `使用说明`
 * 1.目前给出了ES5和ES6两种语法的版本，有后缀名es5为es5版本，可以直接用script标签引入，es6版本必须使用import引入，因为插件使用了export导出模块。
 * 2.使用该插件十分简单，无需导入其余css，不依赖任何插件，只需先初始化一个实例，es5版本构造函数名必须为LotteryRotate，例如： `new LotteryRotate()` 而es6版本可以根据import引入模块自定义命名，因为插件是export default导出。
