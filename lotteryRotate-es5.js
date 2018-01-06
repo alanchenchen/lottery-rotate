@@ -12,6 +12,7 @@ function LotteryRotate(opt){
 	this.rotateTime = opt.rotateTime/1000;//转盘抽奖的旋转总时间，单位是毫秒
 	this.rem = opt.rem;//canvas的大小，移动端布局，直接写数字，不用带单位
 	this.eType = opt.eType;//按钮的事件类型
+	this.areaColor = opt.areaColor || '#cde59d' ;//转盘扇形的填充颜色
 	this.isRotate=true;
 	this.lastDegree = 0;//上次旋转后停留的角度
 	this.init();
@@ -46,7 +47,7 @@ LotteryRotate.prototype.init=function(){
 	    if (i % 2 == 0) {
 	        ctx.fillStyle = '#fff';
 	    }else{
-	        ctx.fillStyle = '#cde59d';
+	        ctx.fillStyle = this.areaColor;
 	    }
 	    // 填充扇形
 	    ctx.fill();
@@ -58,16 +59,18 @@ LotteryRotate.prototype.init=function(){
 	    ctx.restore();
 	    var li=document.createElement('li');
 	    li.innerHTML = this.listCont[i];
-	    li.style.cssText = 'position: absolute;top:0;left:0;width: 100%;padding-top:0.2rem;transform-origin: 50% 2.025rem;-webkit-transform-origin: 50% 2.025rem;font-size: .3rem;color:red;';
-		li.style.webkitTransform='rotate('+(-(360/ this.num)*i)+'deg)';
-		lottery_list.appendChild(li);
+	    var deg = this.rem/2;
+	    li.style.cssText = 'position: absolute;top:0;left:0;width: 100%;padding-top:0.2rem;transform-origin: 50% '+deg+'rem;-webkit-transform-origin: 50% '+deg+'rem;font-size: .3rem;color:red;';
+	    li.style.webkitTransform='rotate('+(-(360/ this.num)*i)+'deg)';
+	    lottery_list.appendChild(li);
 	}
 	this.obj.appendChild(canvas);
 	this.obj.appendChild(lottery_list);
 }
 LotteryRotate.prototype.rotate=function(opt){
 	var ajax =opt.ajax;
-	var callback = opt.callback;
+	var success = opt.success;
+	var failed = opt.failed;
 	var degree=0;
 	var timer =null;
 	var target;
@@ -90,11 +93,16 @@ LotteryRotate.prototype.rotate=function(opt){
 				$this.chance--;
 				timer = setTimeout(function(){
 					$this.isRotate=true;
-					callback&&callback($this.listCont[target]);
+					success&&success($this.listCont[target]);
 				},$this.rotateTime*1000);
 			}else{
 				clearTimeout(timer);
-				alert('您抽奖次数已用完');
+				if(failed){
+					failed()
+				}
+				else{
+					alert('您抽奖次数已用完');
+				}
 			}
 		}
 	})
