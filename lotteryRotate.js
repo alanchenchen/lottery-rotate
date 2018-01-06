@@ -13,6 +13,7 @@ export default class LotteryRotate {
 		this.rotateTime = rotateTime/1000;//转盘抽奖的旋转总时间，单位是毫秒
 		this.rem = rem;//canvas的大小，移动端布局，直接写数字，不用带单位
 		this.eType = eType;//按钮的事件类型
+		this.areaColor = opt.areaColor || '#cde59d' ;//转盘扇形的填充颜色
 		this.isRotate=true;
 		this.lastDegree = 0;//上次旋转后停留的角度
 		this.init();
@@ -46,7 +47,7 @@ export default class LotteryRotate {
 		    if (i % 2 == 0) {
 		        ctx.fillStyle = '#fff';
 		    }else{
-		        ctx.fillStyle = '#cde59d';
+		        ctx.fillStyle = this.areaColor;
 		    }
 		    // 填充扇形
 		    ctx.fill();
@@ -58,7 +59,8 @@ export default class LotteryRotate {
 		    ctx.restore();
 		    let li=document.createElement('li');
 		    li.innerHTML = this.listCont[i];
-		    li.style.cssText = 'position: absolute;top:0;left:0;width: 100%;padding-top:0.2rem;transform-origin: 50% 2.025rem;-webkit-transform-origin: 50% 2.025rem;font-size: .3rem;color:red;';
+		    let deg = this.rem/2;
+		    li.style.cssText = `position: absolute;top:0;left:0;width: 100%;padding-top:0.2rem;transform-origin: 50% ${deg}rem;-webkit-transform-origin: 50% ${deg}rem;font-size: .3rem;color:red;`;
 			li.style.webkitTransform=`rotate(${(-(360/ this.num)*i)}deg)`;
 			lottery_list.appendChild(li);
 		}
@@ -67,7 +69,8 @@ export default class LotteryRotate {
 	}
 	rotate(opt){
 		let ajax =opt.ajax;
-		let callback = opt.callback;
+		let success = opt.success;
+		let failed = opt.failed;
 		let degree=0;
 		let timer =null;
 		let target;
@@ -89,11 +92,16 @@ export default class LotteryRotate {
 					this.chance--;
 					timer = setTimeout(()=>{
 						this.isRotate=true;
-						callback&&callback(this.listCont[this.target]);
+						success&&success(this.listCont[this.target]);
 					},this.rotateTime*1000);
 				}else{
 					clearTimeout(timer);
-					alert('您抽奖次数已用完');
+					if(failed){
+						failed()
+					}
+					else{
+						alert('您抽奖次数已用完');
+					}
 				}
 			}
 		})
