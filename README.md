@@ -20,7 +20,7 @@
 * 插件提供了一个方法 `rotate`，而且必须在实例初始化之后调用，函数里传入的是一个对象，所有参数作为对象的键值对。
   * `ajax(list)` `Function` `可选` 。请求后台的回调函数，用来获取中奖的奖项，必须return一个数字，数字和数组中的索引对应，默认有一个参数 `list` ，`list` 是奖品数组 `listCont`，如果不传入ajax回调函数，插件默认会调用随机数抽奖
   * `success(award)` `Function` `可选。抽奖成功的回调函数，默认有一个参数 `award` ，`award` 是奖品名称
-  * `failed()` `Function` `可选。当抽奖次数为0抽奖结束的回调函数，如果不写此函数，则默认 `alert('您抽奖次数已用完')`
+  * `failed()` `Function` `可选。当抽奖次数为0抽奖结束的回调函数，如果不写此函数，则默认 `alert('您抽奖次数已用完')`
 ##  * `使用案例` `demo`
 ```javascript
 let Lottery=new LotteryRotate({
